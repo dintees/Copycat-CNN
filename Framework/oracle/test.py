@@ -1,7 +1,7 @@
 #torch
+from ResNetModel import ResNetModel
 import torch
 #local files
-from model import CNN
 from cifar_data import get_datasets
 #general
 from tqdm import tqdm
@@ -15,8 +15,9 @@ if __name__ == '__main__':
         print('Use: {} model_file.pth'.format(argv[0]), file=stderr)
         exit(1)
 
-    model = CNN()
-    model.load_state_dict(torch.load(argv[1]))
+    model = ResNetModel(num_classes = 10)
+    device = torch.device("cpu") 
+    model.load_state_dict(torch.load(argv[1], map_location=device))
     
     batch_size = 16
     dataset = get_datasets(train=False, batch=batch_size)

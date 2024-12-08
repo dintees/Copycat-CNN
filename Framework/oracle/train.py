@@ -12,6 +12,7 @@ import random
 from tqdm import tqdm
 #local files:
 from model import CNN
+from ResNetModel import ResNetModel
 from cifar_data import get_datasets
 #system
 from sys import argv, exit, stderr
@@ -44,13 +45,13 @@ if __name__ == '__main__':
     
     model_fn = '{}.pth'.format('.'.join(argv[1].split('.')[:-1]))
 
-    model = CNN()
+    model = ResNetModel(num_classes = 10)
     
     datasets = get_datasets(test=False)
 
-    s = input('Do you wanna see CIFAR10 samples? [y/N] ')
-    if s.upper().startswith('Y'):
-        show_samples(datasets['train'], classes=datasets['classes'])
+    # s = input('Do you wanna see CIFAR10 samples? [y/N] ')
+    # if s.upper().startswith('Y'):
+    #     show_samples(datasets['train'], classes=datasets['classes'])
     
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
@@ -59,7 +60,7 @@ if __name__ == '__main__':
 
     print('Training model...')
     model = model.to(device)
-    max_epochs = 20
+    max_epochs = 10
     for epoch in range(max_epochs):
         running_loss = 0.0
         with tqdm(datasets['train']) as tqdm_train:
