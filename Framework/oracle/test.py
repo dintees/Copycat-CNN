@@ -19,7 +19,7 @@ if __name__ == '__main__':
     device = torch.device("cpu") 
     model.load_state_dict(torch.load(argv[1], map_location=device))
     
-    batch_size = 16
+    batch_size = 64
     dataset = get_datasets(train=False, batch=batch_size)
 
     print('Testing the model...')
