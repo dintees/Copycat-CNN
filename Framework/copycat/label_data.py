@@ -3,6 +3,7 @@ import torch
 import torchvision.transforms as transforms
 #local files
 from model import CNN
+from ResNetModel import ResNetModel
 from image_list import ImageList
 #general
 from tqdm import tqdm
@@ -20,9 +21,9 @@ if __name__ == '__main__':
     batch_size = int(argv[4]) if len(argv) == 5 else 1024
     
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    model = CNN()
-    model.load_state_dict(torch.load(model_fn))
-    model = model.to(device)
+    model = ResNetModel()
+    model.load_state_dict(torch.load(model_fn, map_location=device))
+    # model = model.to(device)
     
     print('Handling images...')
     transform = transforms.Compose([ transforms.Resize( (32,32) ), transforms.ToTensor() ])

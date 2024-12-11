@@ -34,8 +34,8 @@ if __name__ == '__main__':
     model_fn   = argv[1]
     imglist_fn = argv[2]
     use_cache  = True if ans.upper().startswith('Y') else False
-    batch_size = 32
-    max_epochs = 10
+    batch_size = 256
+    max_epochs = 20
     
     model = CNN()
     
@@ -47,7 +47,8 @@ if __name__ == '__main__':
     loader = torch.utils.data.DataLoader(dataset, shuffle=True, batch_size=batch_size)
 
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.SGD(model.parameters(), lr=1e-4, momentum=0.9)
+    # optimizer = optim.SGD(model.parameters(), lr=1e-4, momentum=0.9)
+    optimizer = optim.Adam(model.parameters(), lr=0.001)
     
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
